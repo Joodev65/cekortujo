@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Episode</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1 id="anime-title">Daftar Episode</h1>
+</header>
+
+<main>
+    <div class="episode-container" id="episode-list"></div>
+</main>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const anime = urlParams.get("anime");
+
+    const episodeData = {
+        "solo-leveling": { title: "Solo Leveling S2", episodes: 12 },
+        "aot": { title: "Attack on Titan", episodes: 25 },
+        "jujutsu": { title: "Jujutsu Kaisen", episodes: 24 }
+    };
+
+    if (episodeData[anime]) {
+        document.getElementById("anime-title").textContent = episodeData[anime].title;
+        const episodeList = document.getElementById("episode-list");
+
+        for (let i = 1; i <= episodeData[anime].episodes; i++) {
+            episodeList.innerHTML += `<a href="watch.html?anime=${anime}&episode=${i}">Episode ${i}</a><br>`;
+        }
+    }
+</script>
+
+</body>
+</html>
