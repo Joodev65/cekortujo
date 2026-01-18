@@ -42,8 +42,4 @@
   <symbol id="icon-code" viewBox="0 0 24 24">
     <path fill="currentColor" d="M8.7 17.3L3.4 12l5.3-5.3L10.1 8 6.8 11.3 10.1 14.6 8.7 17.3zM15.3 6.7L20.6 12l-5.3 5.3L13.9 16l3.3-3.3L13.9 9 15.3 6.7z"/>
   </symbol>
-
-  <symbol id="icon-empty" viewBox="0 0 24 24">
-    <path fill="currentColor" d="M3 3h18v18H3z" opacity="0.06"/>
-  </symbol>
 </svg>
