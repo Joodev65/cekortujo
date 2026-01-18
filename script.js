@@ -10,17 +10,27 @@ document.addEventListener('DOMContentLoaded', () => {
     side.setAttribute('aria-hidden', visible ? 'true' : 'false');
   });
 
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (side.getAttribute('aria-hidden') === 'false' && 
+        !side.contains(e.target) && 
+        !btnMenu.contains(e.target)) {
+      side.style.display = 'none';
+      side.setAttribute('aria-hidden', 'true');
+    }
+  });
+
   btnTheme && btnTheme.addEventListener('click', () => {
     // simple color swap to simulate light/dark (kept, but screenshot is dark)
     document.body.classList.toggle('theme-light');
     if (document.body.classList.contains('theme-light')) {
-      document.documentElement.style.setProperty('--bg','#f6f7f9');
+      document.documentElement.style.setProperty('--bg','#f8f9fa');
       document.documentElement.style.setProperty('--card','#ffffff');
-      document.documentElement.style.setProperty('--muted','#6b6f76');
-      document.documentElement.style.setProperty('--accent','#111217');
-      document.documentElement.style.setProperty('--chip','#efefef');
-      document.documentElement.style.setProperty('--badge','#efefef');
-      document.documentElement.style.setProperty('--glass-border','rgba(0,0,0,0.06)');
+      document.documentElement.style.setProperty('--muted','#666666');
+      document.documentElement.style.setProperty('--accent','#1a1a1a');
+      document.documentElement.style.setProperty('--chip','#f5f5f5');
+      document.documentElement.style.setProperty('--badge','#f5f5f5');
+      document.documentElement.style.setProperty('--glass-border','rgba(0,0,0,0.04)');
     } else {
       document.documentElement.style.setProperty('--bg','#0b0b0b');
       document.documentElement.style.setProperty('--card','#1a1a1a');
