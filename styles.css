@@ -25,7 +25,6 @@ body{
   font-size:15px;
 }
 
-/* container narrow like mobile screenshot */
 .container{
   width:100%;
   max-width:var(--viewport-width);
@@ -33,7 +32,6 @@ body{
   padding:0 18px 86px;
 }
 
-/* Top bar - improved colors */
 .topbar{
   height:56px;
   display:flex;
@@ -82,7 +80,6 @@ body{
   font-weight:400;
 }
 
-/* Side menu - MODERN DESIGN */
 .side-menu{
   display:none;
   position:fixed;
@@ -155,9 +152,8 @@ body{
   transform:scale(1.05);
 }
 
-/* Hero block centered - REVISED LAYOUT */
 .hero{
-  padding:24px 0 28px; /* Increased bottom padding for more space */
+  padding:24px 0 28px; 
 }
 
 .hero-inner{
@@ -190,14 +186,13 @@ body{
 }
 
 .subtitle{
-  margin:6px 0 20px; /* Increased bottom margin for more space */
+  margin:6px 0 20px; 
   color:var(--muted);
   font-weight:300;
   font-size:14px;
   letter-spacing:0.3px;
 }
 
-/* hero social icons - now centered below subtitle */
 .hero-icons{
   display:flex;
   justify-content:center;
@@ -233,7 +228,6 @@ body{
   stroke:none;
 }
 
-/* Card style */
 .card{
   background:linear-gradient(180deg,var(--card), #141414);
   border-radius:var(--radius);
@@ -257,7 +251,6 @@ body{
   border-radius:2px;
 }
 
-/* text */
 .muted{
   color:var(--muted);
   line-height:1.7;
@@ -265,7 +258,6 @@ body{
   margin:0;
 }
 
-/* Chips and badges */
 .chips{
   display:flex;
   flex-wrap:wrap;
@@ -307,7 +299,6 @@ body{
   fill:currentColor;
 }
 
-/* Projects */
 .project{
   display:block;
   background:rgba(255,255,255,0.02);
@@ -337,7 +328,6 @@ body{
   line-height:1.5;
 }
 
-/* Footer */
 .footer{
   text-align:center;
   color:var(--muted);
@@ -347,7 +337,6 @@ body{
   opacity:0.8;
 }
 
-/* Responsive: show side menu on large screens */
 @media(min-width:860px){
   .side-menu{
     display:block;
@@ -372,7 +361,6 @@ body{
   .hamburger{display:none}
 }
 
-/* Tablet adjustments */
 @media(min-width:768px){
   .container{
     max-width:600px;
@@ -395,7 +383,6 @@ body{
   }
 }
 
-/* Light theme styles */
 body.theme-light{
   background:linear-gradient(180deg, #f8f9fa, #f1f3f5);
   color:#1a1a1a;
@@ -503,5 +490,4 @@ body.theme-light .footer{
   color:#666;
 }
 
-/* Fine tune spacing */
 .card + .card{margin-top:20px}

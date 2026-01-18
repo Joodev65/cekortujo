@@ -1,4 +1,3 @@
-// Menu & theme toggle + small adjustments for pixel match
 document.addEventListener('DOMContentLoaded', () => {
   const btnMenu = document.getElementById('btnMenu');
   const side = document.getElementById('sideMenu');
@@ -10,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     side.setAttribute('aria-hidden', visible ? 'true' : 'false');
   });
 
-  // Close menu when clicking outside
   document.addEventListener('click', (e) => {
     if (side.getAttribute('aria-hidden') === 'false' && 
         !side.contains(e.target) && 
@@ -21,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   btnTheme && btnTheme.addEventListener('click', () => {
-    // simple color swap to simulate light/dark (kept, but screenshot is dark)
     document.body.classList.toggle('theme-light');
     if (document.body.classList.contains('theme-light')) {
       document.documentElement.style.setProperty('--bg','#f8f9fa');
