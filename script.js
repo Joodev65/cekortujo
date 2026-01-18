@@ -1,35 +1,34 @@
-const animeList = [
-    { title: "Solo Leveling S2", image: "https://files.catbox.moe/iptzn9.jpg", link: "episodes.html?anime=solo-leveling" },
-    { title: "Attack on Titan", image: "https://files.catbox.moe/fbj8l1.jpg", link: "episodes.html?anime=aot" },
-    { title: "Jujutsu Kaisen", image: "https://files.catbox.moe/x9wnkf.jpg", link: "episodes.html?anime=jujutsu" }
-];
+// Menu & theme toggle + small adjustments for pixel match
+document.addEventListener('DOMContentLoaded', () => {
+  const btnMenu = document.getElementById('btnMenu');
+  const side = document.getElementById('sideMenu');
+  const btnTheme = document.getElementById('btnTheme');
 
-function loadAnime() {
-    const container = document.getElementById("anime-list");
-    container.innerHTML = "";
-    animeList.forEach(anime => {
-        container.innerHTML += `
-            <div class="anime-card">
-                <img src="${anime.image}" alt="${anime.title}">
-                <a href="${anime.link}">${anime.title}</a>
-            </div>
-        `;
-    });
-}
+  btnMenu && btnMenu.addEventListener('click', () => {
+    const visible = side.getAttribute('aria-hidden') === 'false';
+    side.style.display = visible ? 'none' : 'block';
+    side.setAttribute('aria-hidden', visible ? 'true' : 'false');
+  });
 
-function searchAnime() {
-    const query = document.getElementById("search").value.toLowerCase();
-    const filteredAnime = animeList.filter(anime => anime.title.toLowerCase().includes(query));
-    const container = document.getElementById("anime-list");
-    container.innerHTML = "";
-    filteredAnime.forEach(anime => {
-        container.innerHTML += `
-            <div class="anime-card">
-                <img src="${anime.image}" alt="${anime.title}">
-                <a href="${anime.link}">${anime.title}</a>
-            </div>
-        `;
-    });
-}
-
-window.onload = loadAnime;
+  btnTheme && btnTheme.addEventListener('click', () => {
+    // simple color swap to simulate light/dark (kept, but screenshot is dark)
+    document.body.classList.toggle('theme-light');
+    if (document.body.classList.contains('theme-light')) {
+      document.documentElement.style.setProperty('--bg','#f6f7f9');
+      document.documentElement.style.setProperty('--card','#ffffff');
+      document.documentElement.style.setProperty('--muted','#6b6f76');
+      document.documentElement.style.setProperty('--accent','#111217');
+      document.documentElement.style.setProperty('--chip','#efefef');
+      document.documentElement.style.setProperty('--badge','#efefef');
+      document.documentElement.style.setProperty('--glass-border','rgba(0,0,0,0.06)');
+    } else {
+      document.documentElement.style.setProperty('--bg','#0b0b0b');
+      document.documentElement.style.setProperty('--card','#1a1a1a');
+      document.documentElement.style.setProperty('--muted','#9b9ea1');
+      document.documentElement.style.setProperty('--accent','#e6e6e6');
+      document.documentElement.style.setProperty('--chip','#232323');
+      document.documentElement.style.setProperty('--badge','#262626');
+      document.documentElement.style.setProperty('--glass-border','rgba(255,255,255,0.025)');
+    }
+  });
+});

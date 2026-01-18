@@ -1,32 +1,138 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jose Wibuboy!</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+  <title>JooModdss — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="theme-dark">
+  <header class="topbar">
+    <button class="hamburger" id="btnMenu" aria-label="Toggle menu">
+      <svg class="icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
 
-<header>
-    <div class="logo-container">
-        <img src="https://files.catbox.moe/s71u1p.jpg" alt="Logo" class="logo">
-        <h1>Jose Wibuboy!</h1>
+    <div class="address-bar">
+      <div class="address-text">siputzx.my.id</div>
     </div>
-    <input type="text" id="search" placeholder="Cari anime..." onkeyup="searchAnime()">
-</header>
 
-<nav>
-    <a href="index.html">Home</a>
-    <a href="#">Genre</a>
-    <a href="#">Trending</a>
-</nav>
+    <div class="spacer"></div>
 
-<main>
-    <h2>Daftar Anime</h2>
-    <div class="anime-container" id="anime-list"></div>
-</main>
+    <button id="btnTheme" class="theme-toggle" aria-label="Toggle theme">
+      <svg class="icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    </button>
+  </header>
 
-<script src="script.js"></script>
+  <nav id="sideMenu" class="side-menu" aria-hidden="true">
+    <ul>
+      <li><a href="#online">Online Identities</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#personal">Personal Information</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-inner">
+        <img class="avatar" src="https://files.catbox.moe/z54z7o.jpg" alt="Avatar">
+        <div class="meta">
+          <h1 class="name">JooModdss</h1>
+          <p class="subtitle">Prompt Engineer</p>
+        </div>
+        <div class="hero-icons">
+          <a class="social" href="https://mail.google.com/mail/?view=cm&fs=1&to=layananjoocode@gmail.com" target="_blank" title="Email (Gmail)">
+            <svg><use href="icons.svg#icon-mail"></use></svg>
+          </a>
+          <a class="social" href="https://t.me/JooModdss" target="_blank" title="Telegram">
+            <svg><use href="icons.svg#icon-telegram"></use></svg>
+          </a>
+          <a class="social" href="https://github.com/Joodev65" target="_blank" title="GitHub">
+            <svg><use href="icons.svg#icon-github"></use></svg>
+          </a>
+          <a class="social" href="https://instagram.com/joosee3e_" target="_blank" title="Instagram">
+            <svg><use href="icons.svg#icon-instagram"></use></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="online" class="card">
+      <h2 class="card-title">Online Identities</h2>
+      <div class="divider"></div>
+      <div class="chips">
+        <span class="chip">Joo</span>
+        <span class="chip">JooMods</span>
+        <span class="chip">JooModdss</span>
+        <span class="chip">Joocode</span>
+      </div>
+    </section>
+
+    <section id="about" class="card">
+      <h2 class="card-title">About</h2>
+      <div class="divider"></div>
+      <p class="muted">Experienced Prompt Engineer passionate about developing intelligent AI systems. Specializing in crafting effective prompts and optimizing human-AI interactions.</p>
+    </section>
+
+    <section id="personal" class="card">
+      <h2 class="card-title">Personal Information</h2>
+      <div class="divider"></div>
+      <div class="badges">
+        <span class="badge"><svg><use href="icons.svg#icon-cake"></use></svg>14 Year</span>
+        <span class="badge"><svg><use href="icons.svg#icon-globe"></use></svg>Indonesia</span>
+        <span class="badge"><svg><use href="icons.svg#icon-heart"></use></svg>Single</span>
+
+        <span class="badge"><svg><use href="icons.svg#icon-cat"></use></svg>Cat Lover</span>
+        <span class="badge"><svg><use href="icons.svg#icon-kind"></use></svg>Kindhearted</span>
+        <span class="badge"><svg><use href="icons.svg#icon-noentry"></use></svg>Nolep</span>
+
+        <span class="badge"><svg><use href="icons.svg#icon-code"></use></svg>Coding</span>
+        <span class="badge"><svg><use href="icons.svg#icon-empty"></use></svg>Hardwork</span>
+      </div>
+    </section>
+
+    <section id="skills" class="card">
+      <h2 class="card-title">Skills</h2>
+      <div class="divider"></div>
+      <div class="chips">
+        <span class="chip">Prompt Engineering</span>
+        <span class="chip">AI Interaction</span>
+        <span class="chip">API Developer</span>
+        <span class="chip">Firebase</span>
+        <span class="chip">Node.js</span>
+        <span class="chip">MongoDB</span>
+        <span class="chip">Website Scraping</span>
+      </div>
+    </section>
+
+    <section id="projects" class="card">
+      <h2 class="card-title">Projects</h2>
+      <div class="divider"></div>
+
+      <a class="project" href="https://aliicia.my.id" target="_blank">
+        <div class="proj-title">Alicia Api</div>
+        <div class="proj-desc">REST API for multi-purpose services</div>
+      </a>
+
+      <a class="project" href="https://chat.aliicia.my.id" target="_blank">
+        <div class="proj-title">Alicia AI</div>
+        <div class="proj-desc">AI-powered conversational assistant</div>
+      </a>
+
+      <a class="project" href="https://code.vortexx.web.id" target="_blank">
+        <div class="proj-title">Code Vortex</div>
+        <div class="proj-desc">Developer projects & tools</div>
+      </a>
+    </section>
+
+    <footer class="footer">
+      © 2024 | JooModdss
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>

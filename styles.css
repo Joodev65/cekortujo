@@ -1,0 +1,149 @@
+:root{
+  --viewport-width: 420px;
+  --bg:#0b0b0b;
+  --card:#1a1a1a;
+  --muted:#9b9ea1;
+  --accent:#e6e6e6;
+  --chip:#232323;
+  --badge:#262626;
+  --radius:14px;
+  --glass-shadow: 0 10px 28px rgba(0,0,0,0.65);
+  --glass-border: rgba(255,255,255,0.025);
+  --gap:16px;
+  font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, "Helvetica Neue", Arial;
+  color-scheme: dark;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:linear-gradient(180deg,var(--bg),#070707);
+  color:var(--accent);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  font-size:15px;
+}
+
+/* container narrow like mobile screenshot */
+.container{
+  width:100%;
+  max-width:var(--viewport-width);
+  margin:14px auto;
+  padding:0 18px 86px;
+}
+
+/* Top bar */
+.topbar{
+  height:56px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 14px;
+  position:sticky;
+  top:0;
+  z-index:40;
+  background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+  border-bottom: 1px solid rgba(255,255,255,0.02);
+}
+.hamburger{
+  background:transparent;
+  border:0;
+  color:var(--accent);
+  padding:8px;
+  border-radius:10px;
+}
+.address-bar{
+  background:transparent;
+  padding:6px 12px;border-radius:10px;
+  display:flex;align-items:center;
+}
+.address-text{color:var(--muted);font-size:13px}
+
+/* Side menu hidden on mobile */
+.side-menu{display:none}
+.spacer{flex:1}
+.theme-toggle{background:transparent;border:0;color:var(--accent);padding:8px;border-radius:10px}
+
+/* Hero block centered */
+.hero{
+  padding:18px 6px 6px;
+}
+.hero-inner{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  justify-content:flex-start;
+}
+.avatar{
+  width:108px;height:108px;border-radius:999px;object-fit:cover;border:6px solid rgba(255,255,255,0.03);
+  box-shadow: 0 14px 34px rgba(0,0,0,0.65);
+  flex:0 0 108px;
+}
+.meta{flex:1}
+.name{
+  margin:0;font-size:28px;line-height:1.02;font-weight:600;
+  letter-spacing:0.2px;
+}
+.subtitle{margin:4px 0 0;color:var(--muted);font-weight:300;font-size:13px}
+
+/* hero right social icons stacked like screenshot center area (aligned under title area) */
+.hero-icons{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.social{width:38px;height:38px;background:var(--card);display:flex;align-items:center;justify-content:center;border-radius:8px;color:var(--muted);text-decoration:none;box-shadow:var(--glass-shadow);border:1px solid var(--glass-border)}
+.social svg{width:16px;height:16px;fill:currentColor;stroke:none}
+
+/* Card style */
+.card{
+  background:linear-gradient(180deg,var(--card), #141414);
+  border-radius:var(--radius);
+  padding:16px;
+  margin:16px 0;
+  box-shadow:var(--glass-shadow);
+  border:1px solid var(--glass-border);
+}
+.card-title{margin:0 0 10px;font-size:17px;font-weight:600}
+.divider{height:1px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));margin-bottom:12px;border-radius:2px}
+
+/* text */
+.muted{color:var(--muted);line-height:1.62;font-size:14px}
+
+/* Chips and badges */
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{
+  background:var(--chip);
+  padding:8px 12px;border-radius:12px;color:var(--accent);
+  font-size:13px;
+  box-shadow: inset 0 -2px 0 rgba(255,255,255,0.01);
+  border:1px solid rgba(255,255,255,0.02);
+}
+.badges{display:flex;flex-wrap:wrap;gap:10px}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--badge);padding:8px 10px;border-radius:10px;color:var(--accent);font-size:13px;
+  border:1px solid rgba(255,255,255,0.02);
+}
+.badge svg{width:14px;height:14px;opacity:0.95;fill:currentColor}
+
+/* Projects */
+.project{
+  display:block;background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;margin-bottom:12px;color:var(--accent);text-decoration:none;border-left:3px solid transparent;
+}
+.project:hover{border-left-color:rgba(255,255,255,0.04)}
+.proj-title{font-weight:600;margin-bottom:6px;font-size:15px}
+.proj-desc{color:var(--muted);font-size:13px}
+
+/* Footer */
+.footer{text-align:center;color:var(--muted);margin-top:10px;opacity:0.95;padding-bottom:22px}
+
+/* Responsive: show side menu on large screens */
+@media(min-width:860px){
+  .side-menu{display:block;position:static}
+  .hamburger{display:none}
+}
+
+/* Fine tune spacing to visually match screenshot exactly */
+.card + .card{margin-top:12px}
