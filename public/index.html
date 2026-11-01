@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OlimpiadeQuiz – Latihan Soal B. Inggris</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#2d1b69;--bg2:#46178f;--yellow:#ffc933;--red:#e21b3c;--blue:#1368ce;--gold:#d89e00;--green:#26890c;--ink:#1d1240;--ok:#26890c;--bad:#e21b3c}
+*{box-sizing:border-box;margin:0}
+body{font-family:'Nunito',system-ui,sans-serif;color:#fff;min-height:100vh;background:radial-gradient(circle at 20% 10%,var(--bg2),var(--bg) 60%);background-attachment:fixed;padding:16px;font-weight:700}
+h1,h2,h3,.btn{font-family:'Baloo 2',sans-serif}
+.wrap{max-width:720px;margin:0 auto}
+.screen{display:none}.screen.on{display:block}
+.card{background:#fff;color:var(--ink);border-radius:20px;padding:22px;box-shadow:0 6px 0 rgba(0,0,0,.25)}
+.logo{text-align:center;margin:18px 0}
+.logo h1{font-size:clamp(2.2rem,9vw,3.6rem);font-weight:800;line-height:1;text-shadow:0 4px 0 rgba(0,0,0,.3)}
+.logo h1 b{color:var(--yellow)}
+.logo p{opacity:.85;margin-top:6px}
+label{display:block;font-weight:800;margin:14px 0 6px}
+input,select{width:100%;font:inherit;font-weight:800;padding:12px 14px;border:3px solid #d9d3ee;border-radius:12px;color:var(--ink);background:#fff}
+input:focus,select:focus,.btn:focus-visible,.opt:focus-visible{outline:4px solid var(--yellow);outline-offset:2px}
+.seg{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px}
+.seg button{font:inherit;font-weight:800;padding:11px 6px;border:3px solid #d9d3ee;background:#fff;color:var(--ink);border-radius:12px;cursor:pointer}
+.seg button.sel{background:var(--bg2);border-color:var(--bg2);color:#fff;transform:translateY(-2px);box-shadow:0 4px 0 #2a0d57}
+.btn{border:0;cursor:pointer;font-size:1.3rem;font-weight:800;padding:12px 22px;border-radius:14px;color:#fff;background:var(--green);box-shadow:0 5px 0 #145a02;width:100%;margin-top:18px}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 #145a02}
+.btn.alt{background:var(--blue);box-shadow:0 5px 0 #0b3f82}
+.err{background:#ffe3e8;color:#9b0f2a;padding:10px 12px;border-radius:10px;margin-top:12px;display:none}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}
+.pill{background:rgba(0,0,0,.28);padding:6px 14px;border-radius:99px;font-weight:800}
+.bar{height:12px;border-radius:9px;background:rgba(0,0,0,.3);overflow:hidden;margin-bottom:14px}
+.bar i{display:block;height:100%;width:0;background:var(--yellow);transition:width .4s}
+.q{background:#fff;color:var(--ink);border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:0 5px 0 rgba(0,0,0,.25)}
+.q .tag{font-size:.8rem;color:#6b5fa0}
+.q h2{font-size:1.25rem;line-height:1.35;font-weight:600;margin-top:4px}
+.passage{background:#f3f0fb;border-left:6px solid var(--bg2);padding:10px 12px;border-radius:8px;margin:10px 0;font-weight:500;line-height:1.5;white-space:pre-line}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:560px){.opts{grid-template-columns:1fr}}
+.opt{font:inherit;font-weight:800;text-align:left;color:#fff;border:0;border-radius:14px;padding:16px 14px;cursor:pointer;display:flex;gap:10px;align-items:center;min-height:68px;box-shadow:0 5px 0 rgba(0,0,0,.3);transition:transform .1s,opacity .2s}
+.opt:active:not(:disabled){transform:translateY(4px);box-shadow:0 1px 0 rgba(0,0,0,.3)}
+.opt .sh{font-size:1.5rem;flex:none;width:30px;text-align:center}
+.o0{background:var(--red)}.o1{background:var(--blue)}.o2{background:var(--gold)}.o3{background:var(--green)}
+.opt:disabled{cursor:default}
+.opt.dim{opacity:.35}
+.opt.right{outline:5px solid #fff;animation:pop .35s}
+.opt.wrong{animation:shake .35s}
+@keyframes pop{50%{transform:scale(1.04)}}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.fb{display:none;border-radius:18px;padding:16px;margin-top:14px;background:#fff;color:var(--ink);box-shadow:0 5px 0 rgba(0,0,0,.25)}
+.fb h3{font-size:1.5rem}
+.fb.ok h3{color:var(--ok)}.fb.no h3{color:var(--bad)}
+.fb p{font-weight:600;line-height:1.5;margin-top:4px}
+.res{text-align:center}
+.res .big{font-family:'Baloo 2';font-size:4rem;font-weight:800;color:var(--bg2);line-height:1}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+.stats div{background:#f3f0fb;border-radius:12px;padding:10px}
+.stats b{display:block;font-size:1.4rem;font-family:'Baloo 2'}
+.rev{text-align:left;margin-top:10px}
+.rev details{background:#f3f0fb;border-radius:12px;padding:10px 12px;margin-top:8px}
+.rev summary{cursor:pointer;font-weight:800}
+.rev p{font-weight:500;margin-top:6px;line-height:1.45}
+.semangat{position:fixed;right:14px;bottom:14px;z-index:20;width:auto;margin:0;padding:10px 18px;font-size:1.1rem;background:var(--yellow);color:var(--ink);box-shadow:0 5px 0 #a57c00}
+#boost{position:fixed;inset:0;pointer-events:none;z-index:30;overflow:hidden}
+#boost img{position:absolute;width:clamp(90px,24vw,200px);aspect-ratio:1;object-fit:cover;border:5px solid #fff;border-radius:18px;box-shadow:0 8px 20px rgba(0,0,0,.45);animation:in .5s cubic-bezier(.2,1.6,.4,1) both}
+#boost .msg{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--yellow);color:var(--ink);font-family:'Baloo 2';font-weight:800;font-size:clamp(1.5rem,6vw,2.6rem);text-align:center;padding:14px 22px;border-radius:20px;width:min(88vw,520px);box-shadow:0 8px 0 rgba(0,0,0,.35);animation:in .5s cubic-bezier(.2,1.6,.4,1) both}
+#boost.out{opacity:0;transition:opacity .5s}
+@keyframes in{from{transform:translate(var(--tx,0),var(--ty,0)) scale(0) rotate(0)}}
+#boost .msg{--tx:-50%;--ty:-50%}
+.loader{text-align:center;padding:60px 10px}
+.spin{width:64px;height:64px;border:8px solid rgba(255,255,255,.25);border-top-color:var(--yellow);border-radius:50%;margin:0 auto 16px;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section id="s-start" class="screen on">
+  <div class="logo"><h1>Olimpiade<b>Quiz</b></h1><p>Latihan soal B. Inggris, soalnya dibuat AI jadi nggak pernah habis</p></div>
+  <div class="card">
+    <label for="nick">Nickname</label>
+    <input id="nick" maxlength="16" placeholder="Contoh: Jose" autocomplete="off">
+    <label for="topic">Materi</label>
+    <select id="topic"></select>
+    <label>Level kesulitan</label>
+    <div class="seg" id="lv"></div>
+    <label>Jumlah soal</label>
+    <div class="seg" id="ct"></div>
+    <div class="err" id="err1"></div>
+    <button class="btn" id="go">Mulai ujian!</button>
+  </div>
+</section>
+
+<section id="s-load" class="screen"><div class="loader"><div class="spin"></div><h2 id="ltxt">AI lagi bikin soal…</h2></div></section>
+
+<section id="s-quiz" class="screen">
+  <div class="top"><span class="pill" id="prog"></span><span class="pill" id="score"></span></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="q"><span class="tag" id="qtag"></span><div class="passage" id="qpass" hidden></div><h2 id="qtext"></h2></div>
+  <div class="opts" id="opts"></div>
+  <div class="fb" id="fb"><h3 id="fbh"></h3><p id="fbp"></p><button class="btn alt" id="next">Lanjut</button></div>
+</section>
+
+<section id="s-end" class="screen">
+  <div class="card res">
+    <h2 id="rt"></h2>
+    <div class="big" id="rs"></div>
+    <div class="stats"><div><b id="rc"></b>benar</div><div><b id="rw"></b>salah</div><div><b id="rk"></b>streak terbaik</div></div>
+    <p id="rm"></p>
+    <div class="rev" id="rev"></div>
+    <button class="btn" id="again">Main lagi</button>
+  </div>
+</section>
+</div>
+
+<button class="btn semangat" id="spirit">Semangat!</button>
+<div id="boost"></div>
+
+<script>
+const GROUPS={
+ "Grammar & Structure":["16 English Tenses","Subject-Verb Agreement","Parts of Speech","Pronouns","To Be: Am, Is, Are, Was, Were","Articles: A, An, The","Singular and Plural Nouns","Countable and Uncountable Nouns","Quantifiers: Some, Any, Much, Many, Few, Little","Adjectives and Adverbs","Degrees of Comparison","Prepositions of Time and Place","Conjunctions","Modal Verbs","Active and Passive Voice","Direct and Indirect Speech","Conditional Sentences","Relative Clauses","Gerunds and Infinitives","Question Tags","WH-Questions","Subject and Object","Sentence Structure","Positive, Negative, and Interrogative Sentences","Imperative Sentences","Error Recognition","Word Order and Sentence Arrangement","Causative and Cause-and-Effect Expressions"],
+ "Vocabulary":["Synonyms","Antonyms","Word Meaning in Context","Idioms","Phrasal Verbs","Proverbs","Prefixes and Suffixes","Word Formation","Commonly Confused Words","Collocations","Spelling and Word Usage","Riddles and Odd One Out"],
+ "Reading Comprehension":["Main Idea","Topic and Title","Specific Information","Explicit and Implicit Information","Inference and Deduction","Reference Words","Author's Purpose","Drawing Conclusions","Cause and Effect","Vocabulary in Context","Skimming and Scanning","Critical Reading","Comparing Two Texts"],
+ "Text Types":["Descriptive Text","Recount Text","Narrative Text","Procedure Text","Report Text","Analytical Exposition","Spoof Text","Explanation Text","Announcement","Advertisement","Invitation","Greeting Cards","Short Messages and Notices","Labels","Letters and Emails","Posters","Dialogues and Conversations"],
+ "Expressions & Communication":["Greetings and Leave-Taking","Introduction and Self-Introduction","Asking and Giving Opinions","Agreement and Disagreement","Asking for and Giving Suggestions","Asking for and Giving Advice","Asking for and Giving Permission","Asking for and Giving Help","Offering Help","Invitations and Responses","Compliments and Congratulations","Expressing Gratitude and Apologies","Expressing Feelings","Expressing Ability and Inability","Expressing Obligation and Necessity","Expressing Intention and Plans","Polite Expressions","Dialogue Completion"],
+ "Tambahan":["Basic Translation","Cloze Tests","Sentence Completion","Paragraph Completion","Sentence Transformation","Synonym and Antonym in Context","Logical Reasoning in English","Short Functional Text Analysis","Common English Idiomatic Expressions","Basic Literary Devices","Reading Charts, Tables, and Schedules"]
+};
+const LEVELS=[["mudah","Mudah"],["sedang","Sedang"],["sulit","Sulit"],["olimpiade","Olimpiade"]];
+const COUNTS=[5,10,15,20];
+const SHAPES=["▲","◆","●","■"];
+const PHOTO="https://files.catbox.moe/j7u7i5.jpg";
+const MSGS=["Semangat! Kamu pasti bisa! 🔥","Satu soal lagi, satu langkah lebih dekat ke juara 🏆","Belajar hari ini, menang besok 💪","Gas terus, jangan kendor! 🚀","Medali itu milik yang konsisten ⭐"];
+const $=id=>document.getElementById(id);
+const S={level:"sedang",count:10,qs:[],i:0,score:0,ok:0,streak:0,best:0,log:[],nick:""};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function show(id){document.querySelectorAll(".screen").forEach(e=>e.classList.remove("on"));$(id).classList.add("on");scrollTo(0,0)}
+
+// Start screen setup
+(function(){
+  const t=$("topic");
+  t.innerHTML='<option value="__all">Acak semua materi</option>'+Object.entries(GROUPS).map(([g,l])=>`<optgroup label="${g}"><option value="__g:${g}">Semua ${g}</option>${l.map(x=>`<option>${esc(x)}</option>`).join("")}</optgroup>`).join("");
+  const seg=(el,items,key,fmt)=>{el.innerHTML="";items.forEach(it=>{const v=Array.isArray(it)?it[0]:it,b=document.createElement("button");b.textContent=Array.isArray(it)?it[1]:fmt(it);b.type="button";b.onclick=()=>{S[key]=v;[...el.children].forEach(c=>c.classList.remove("sel"));b.classList.add("sel")};if(v===S[key])b.classList.add("sel");el.appendChild(b)})};
+  seg($("lv"),LEVELS,"level");seg($("ct"),COUNTS,"count",n=>n+" soal");
+  try{$("nick").value=localStorage.getItem("nick")||""}catch(e){}
+})();
+
+function pickTopics(v){
+  const all=Object.values(GROUPS).flat();
+  let pool=v==="__all"?all:v.startsWith("__g:")?GROUPS[v.slice(4)]:[v];
+  return [...pool].sort(()=>Math.random()-.5).slice(0,Math.min(pool.length,S.count));
+}
+
+function err(m){const e=$("err1");e.textContent=m;e.style.display=m?"block":"none"}
+
+$("go").onclick=async()=>{
+  const nick=$("nick").value.trim();
+  if(!nick){err("Isi nickname dulu ya.");$("nick").focus();return}
+  err("");S.nick=nick;try{localStorage.setItem("nick",nick)}catch(e){}
+  $("ltxt").textContent="AI lagi bikin soal, "+nick+"…";show("s-load");
+  try{
+    const r=await fetch("/api/quiz",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({level:S.level,count:S.count,topics:pickTopics($("topic").value)})});
+    const d=await r.json();
+    if(!r.ok||!d.questions)throw new Error(d.error||"Gagal memuat soal");
+    Object.assign(S,{qs:d.questions,i:0,score:0,ok:0,streak:0,best:0,log:[]});
+    render();show("s-quiz");
+  }catch(e){show("s-start");err(e.message)}
+};
+
+function render(){
+  const q=S.qs[S.i];
+  $("prog").textContent=`Soal ${S.i+1}/${S.qs.length}`;
+  $("score").textContent=`${S.score} poin`;
+  $("bar").style.width=(S.i/S.qs.length*100)+"%";
+  $("qtag").textContent=q.topic;
+  const p=$("qpass");p.hidden=!q.passage;p.textContent=q.passage||"";
+  $("qtext").textContent=q.question;
+  $("fb").style.display="none";
+  const o=$("opts");o.innerHTML="";
+  q.options.forEach((t,k)=>{const b=document.createElement("button");b.className="opt o"+k;b.innerHTML=`<span class="sh">${SHAPES[k]}</span><span>${esc(t)}</span>`;b.onclick=()=>answer(k);o.appendChild(b)});
+}
+
+function answer(k){
+  const q=S.qs[S.i],good=k===q.answer,bs=[...$("opts").children];
+  bs.forEach((b,j)=>{b.disabled=true;if(j===q.answer)b.classList.add("right");else if(j===k)b.classList.add("wrong");else b.classList.add("dim")});
+  if(good){S.ok++;S.streak++;S.best=Math.max(S.best,S.streak);S.score+=100+Math.min(S.streak-1,5)*20}else S.streak=0;
+  S.log.push({q,k,good});
+  $("score").textContent=`${S.score} poin`;
+  const fb=$("fb");fb.className="fb "+(good?"ok":"no");fb.style.display="block";
+  $("fbh").textContent=good?(S.streak>1?`Benar! Streak ${S.streak} 🔥`:"Benar! 🎉"):"Belum tepat 😅";
+  $("fbp").textContent=(good?"":"Jawaban benar: "+q.options[q.answer]+". ")+q.explanation;
+  $("next").textContent=S.i+1<S.qs.length?"Lanjut":"Lihat hasil";
+  fb.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+
+$("next").onclick=()=>{S.i++;S.i<S.qs.length?render():finish()};
+
+function finish(){
+  const n=S.qs.length,pct=Math.round(S.ok/n*100);
+  $("rt").textContent=`Selesai, ${S.nick}!`;
+  $("rs").textContent=S.score;
+  $("rc").textContent=S.ok;$("rw").textContent=n-S.ok;$("rk").textContent=S.best;
+  $("rm").textContent=pct>=80?"Mantap, level juara! 🏆":pct>=50?"Lumayan, tinggal diasah lagi 💪":"Tenang, salah itu bagian dari belajar. Baca pembahasannya ya 📖";
+  $("rev").innerHTML="<h3>Pembahasan</h3>"+S.log.map((l,j)=>`<details><summary>${l.good?"✅":"❌"} ${j+1}. ${esc(l.q.question)}</summary><p><b>Jawaban:</b> ${esc(l.q.options[l.q.answer])}</p><p>${esc(l.q.explanation)}</p></details>`).join("");
+  show("s-end");
+}
+$("again").onclick=()=>show("s-start");
+
+// Tombol Semangat!
+let boostTimer;
+$("spirit").onclick=()=>{
+  const b=$("boost");clearTimeout(boostTimer);b.className="";b.innerHTML="";
+  const spots=[[2,3],[40,2],[72,3],[2,38],[74,38],[2,70],[38,74],[72,70]];
+  spots.forEach(([x,y],j)=>{const im=new Image();im.src=PHOTO;im.alt="";im.style.left=x+"%";im.style.top=y+"%";im.style.transform=`rotate(${(Math.random()*24-12).toFixed(1)}deg)`;im.style.animationDelay=(j*60)+"ms";b.appendChild(im)});
+  const m=document.createElement("div");m.className="msg";m.textContent=MSGS[Math.floor(Math.random()*MSGS.length)];b.appendChild(m);
+  boostTimer=setTimeout(()=>{b.classList.add("out");setTimeout(()=>{b.innerHTML="";b.className=""},500)},3500);
+};
+</script>
+</body>
+</html>
