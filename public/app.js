@@ -2,7 +2,7 @@ const $=id=>document.getElementById(id);
 const ic=(n,c='')=>`<svg class="ic ${c}"><use href="#${/^(s\d|i-)/.test(n)?n:'i-'+n}"/></svg>`;
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const shuffle=a=>[...a].sort(()=>Math.random()-.5);
-const mj=el=>{try{window.renderMathInElement&&renderMathInElement(el,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false})}catch(e){}};
+const mj=el=>{try{window.renderMathInElement&&renderMathInElement(el,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false},{left:'$',right:'$',display:false}],throwOnError:false})}catch(e){}};
 
 const DEF={nick:'',xp:0,ans:0,ok:0,runs:0,hist:[],mute:false};
 let P=(()=>{try{return Object.assign({},DEF,JSON.parse(localStorage.getItem('jaquiz')||'{}'))}catch(e){return{...DEF}}})();
@@ -202,6 +202,9 @@ cv.addEventListener('pointermove',e=>{if(!drawing)return;const[x,y]=pos(e);cx.li
 addEventListener('resize',()=>{if(pad.classList.contains('on')&&!drawing)sizePad()});
 
 function md(src){
+  src=src.replace(/\\\[([\s\S]*?)\\\]/g,(m,x)=>'\n$$'+x.trim().replace(/\s*\n\s*/g,' ')+'$$\n')
+    .replace(/\\\(([\s\S]*?)\\\)/g,(m,x)=>'$'+x.trim()+'$')
+    .replace(/\$\$([\s\S]*?)\$\$/g,(m,x)=>'\n$$'+x.trim().replace(/\s*\n\s*/g,' ')+'$$\n');
   const inl=s=>esc(s).replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>').replace(/(^|[^*])\*([^*\s][^*]*)\*/g,'$1<i>$2</i>');
   const L=src.split('\n'),out=[],li=/^\s*([-*]|\d+[.)])\s+/,cells=l=>l.trim().replace(/^\||\|$/g,'').split('|').map(x=>x.trim());
   let i=0;
@@ -213,6 +216,8 @@ function md(src){
     if(/^\|/.test(l)&&/^\|?[\s:|-]+\|?\s*$/.test(L[i+1]||'')&&/-/.test(L[i+1]||'')){
       const h=cells(l);i+=2;const rows=[];while(i<L.length&&/^\|/.test(L[i]))rows.push(cells(L[i++]));
       out.push(`<div class="tw2"><table><thead><tr>${h.map(x=>'<th>'+inl(x)+'</th>').join('')}</tr></thead><tbody>${rows.map(r=>'<tr>'+r.map(x=>'<td>'+inl(x)+'</td>').join('')+'</tr>').join('')}</tbody></table></div>`);continue}
+    if(l.includes('\t')&&L[i+1]&&L[i+1].includes('\t')){const rows=[];while(i<L.length&&L[i].includes('\t'))rows.push(L[i++].split('\t').map(x=>x.trim()));
+      out.push(`<div class="tw2"><table><thead><tr>${rows[0].map(x=>'<th>'+inl(x)+'</th>').join('')}</tr></thead><tbody>${rows.slice(1).map(r=>'<tr>'+r.map(x=>'<td>'+inl(x)+'</td>').join('')+'</tr>').join('')}</tbody></table></div>`);continue}
     if(/^>\s?/.test(l)){const q=[];while(i<L.length&&/^>\s?/.test(L[i]))q.push(inl(L[i++].replace(/^>\s?/,'')));out.push('<blockquote>'+q.join('<br>')+'</blockquote>');continue}
     if(/^\s*(---+|\*\*\*+)\s*$/.test(l)){out.push('<hr>');i++;continue}
     if(!l.trim()){i++;continue}
@@ -226,7 +231,7 @@ const chat=[];let busy=false;
 const SUG=['Buatkan catatan materi Hukum Newton lengkap','Jelaskan Passive Voice dengan contoh dan tabel','Kasih trik menghafal rumus Matematika SMP','Buat catatan kecil Inverted Conditional','Jelaskan perbedaan Gerund dan Participial Phrase'];
 function openChat(){
   show('s-chat');
-  if(!$('msgs').children.length)addMsg('a',md('Halo **'+esc(P.nick)+'**, aku **Joo AI**. Aku bisa membantu kamu dalam menjelaskan materi, memberikan materi, dan tips belajar lainnya, Mau belajar apa hari ini?'),true);
+  if(!$('msgs').children.length)addMsg('a',md('Halo **'+esc(P.nick)+'**, aku **Joo AI**. Aku bisa membantu:\n\n- Membuat **catatan materi** dan catatan kecil\n- Menjelaskan konsep, rumus, dan contoh soal\n- Memberi **poin-poin cara menghafal**\n\nMau belajar apa hari ini?'),true);
   $('sug').innerHTML=chat.length?'':SUG.map(s=>`<button type="button">${esc(s)}</button>`).join('');
 }
 $('sug').onclick=e=>{const b=e.target.closest('button');if(b)sendChat(b.textContent)};
@@ -250,7 +255,7 @@ $('cb').onclick=()=>{if(S&&S.active){show('s-exam');runTimer()}else dash()};
 document.addEventListener('click',e=>{const b=e.target.closest('[data-ask]');if(b&&S)askJoo(S.qs[+b.dataset.ask],S.ans[+b.dataset.ask])});
 function askJoo(q,a){
   stopTimer();openChat();const L='ABCD';
-  sendChat(`Tolong bantu aku memahami soal ini.\n\n${q.passage?'Teks:\n'+q.passage+'\n\n':''}Soal: ${q.question}\n${q.options.map((o,i)=>L[i]+'. '+o).join('\n')}\n\nJawabanku: ${a==null?'(belum menjawab)':L[a]+'. '+q.options[a]}\nJawaban benar: ${L[q.answer]}. ${q.options[q.answer]}\n\nJelaskan langkah demi langkah cara mengerjakannya, kenapa jawabanku keliru, rumus atau konsep kuncinya, dan satu tips agar tidak salah lagi.`);
+  sendChat(`Tolong bantu aku memahami soal ini.\n\n${q.passage?'Teks:\n'+q.passage+'\n\n':''}Soal: ${q.question}\n${q.options.map((o,i)=>L[i]+'. '+o).join('\n')}\n\nJawabanku: ${a==null?'(belum menjawab)':L[a]+'. '+q.options[a]}\nJawaban benar: ${L[q.answer]}. ${q.options[q.answer]}\n\nTulis semua rumus dengan LaTeX memakai tanda $...$ (inline) dan $$...$$ (satu baris), jangan pakai \\( \\) atau \\[ \\]. Jelaskan langkah demi langkah cara mengerjakannya, kenapa jawabanku keliru, rumus atau konsep kuncinya, dan satu tips agar tidak salah lagi.`);
 }
 
 P.nick?dash():welcome();
