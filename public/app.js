@@ -231,7 +231,7 @@ const chat=[];let busy=false;
 const SUG=['Buatkan catatan materi Hukum Newton lengkap','Jelaskan Passive Voice dengan contoh dan tabel','Kasih trik menghafal rumus Matematika SMP','Buat catatan kecil Inverted Conditional','Jelaskan perbedaan Gerund dan Participial Phrase'];
 function openChat(){
   show('s-chat');
-  if(!$('msgs').children.length)addMsg('a',md('Halo **'+esc(P.nick)+'**, aku **Joo AI**. Aku bisa membantu:\n\n- Membuat **catatan materi** dan catatan kecil\n- Menjelaskan konsep, rumus, dan contoh soal\n- Memberi **poin-poin cara menghafal**\n\nMau belajar apa hari ini?'),true);
+  if(!$('msgs').children.length)addMsg('a',md('Halo **'+esc(P.nick)+'**, aku **Joo AI**. Aku bisa membantu memberikan materi, menjelaskan materi dan kebutuhan belajar lainnya, Mau belajar apa hari ini?'),true);
   $('sug').innerHTML=chat.length?'':SUG.map(s=>`<button type="button">${esc(s)}</button>`).join('');
 }
 $('sug').onclick=e=>{const b=e.target.closest('button');if(b)sendChat(b.textContent)};
