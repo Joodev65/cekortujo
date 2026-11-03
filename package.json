@@ -1,6 +1,1 @@
-{
-  "name": "tanyaai-quiz-olimpiade",
-  "version": "1.0.0",
-  "private": true,
-  "engines": { "node": ">=18" }
-}
+{ "name": "jaquiz", "version": "2.0.0", "private": true, "engines": { "node": ">=18" } }
