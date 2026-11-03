@@ -2,6 +2,7 @@ const $=id=>document.getElementById(id);
 const ic=(n,c='')=>`<svg class="ic ${c}"><use href="#${/^(s\d|i-)/.test(n)?n:'i-'+n}"/></svg>`;
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const shuffle=a=>[...a].sort(()=>Math.random()-.5);
+const mj=el=>{try{window.renderMathInElement&&renderMathInElement(el,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false})}catch(e){}};
 
 const DEF={nick:'',xp:0,ans:0,ok:0,runs:0,hist:[],mute:false};
 let P=(()=>{try{return Object.assign({},DEF,JSON.parse(localStorage.getItem('jaquiz')||'{}'))}catch(e){return{...DEF}}})();
@@ -110,10 +111,10 @@ async function start(){
   const sj=SUBJECTS[cfg.subj];
   $('lt').textContent=`AI lagi menyiapkan soal ${sj.name}…`;show('s-load');SFX.start();
   try{
-    const r=await fetch('/api/quiz',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({subject:cfg.subj,level:cfg.lvl,count:cfg.count,topics:topics()})});
+    const r=await fetch('/api/quiz',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({subject:cfg.subj,level:cfg.lvl,count:cfg.count,topics:topics(),mode:M})});
     const d=await r.json().catch(()=>({}));
     if(!r.ok||!d.questions)throw new Error(d.error||'Gagal memuat soal.');
-    S={mode:M,subj:cfg.subj,qs:d.questions,ans:[],i:0,total:cfg.time*60,left:cfg.time*60,lvl:cfg.lvl};
+    S={active:true,mode:M,subj:cfg.subj,qs:d.questions,ans:[],i:0,total:cfg.time*60,left:cfg.time*60,lvl:cfg.lvl};
     clearPad();render();show('s-exam');runTimer();
   }catch(e){show('s-setup');const x=$('serr');x.textContent=e.message;x.style.display='block'}
 }
@@ -136,15 +137,16 @@ function render(){
   $('nav').innerHTML=S.qs.map((_,k)=>{const x=S.ans[k];let c=k===S.i?'cur':x==null?'':prac?(x===S.qs[k].answer?'ok':'no'):'dn';return `<button class="${c}" data-n="${k}">${k+1}</button>`}).join('');
   $('nav').onclick=e=>{const b=e.target.closest('[data-n]');if(b){S.i=+b.dataset.n;clearPad();render()}};
   $('qtag').innerHTML=ic(sj.icon)+esc(q.topic||sj.name);
-  const fm=$('qfm');fm.hidden=!q.formula;fm.innerHTML=q.formula?ic('i-bolt')+'<span>Rumus: '+esc(q.formula)+'</span>':'';
+  const fm=$('qfm'),fq=prac&&q.formula;fm.hidden=!fq;fm.innerHTML=fq?ic('i-bolt')+'<span>Rumus: '+esc(q.formula)+'</span>':'';
   const ps=$('qps');ps.hidden=!q.passage;ps.textContent=q.passage||'';
   $('qt').textContent=q.question;
   $('opts').innerHTML=q.options.map((o,k)=>{
     let c='opt o'+k;if(locked)c+=k===q.answer?' right':k===a?' wrong':' dim';else if(a===k)c+=' sel';
     return `<button class="${c}" data-k="${k}" ${locked?'disabled':''}><svg class="ic" style="fill:#fff;stroke:none"><use href="#${OPT[k]}"/></svg><span>${esc(o)}</span></button>`}).join('');
   $('opts').onclick=e=>{const b=e.target.closest('[data-k]');if(b)pick(+b.dataset.k)};
-  $('fbw').innerHTML=locked?`<div class="fb ${a===q.answer?'ok':'no'}"><h3>${a===q.answer?'Benar!':'Belum tepat'}</h3><p>${a===q.answer?'':'Jawaban benar: '+esc(q.options[q.answer])+'\n'}${esc(q.explanation)}</p></div>`:'';
+  $('fbw').innerHTML=locked?`<div class="fb ${a===q.answer?'ok':'no'}"><h3>${a===q.answer?'Benar!':'Belum tepat'}</h3><p>${a===q.answer?'':'Jawaban benar: '+esc(q.options[q.answer])+'\n'}${esc(q.explanation)}</p>${a===q.answer?'':`<button class="btn blu askb" data-ask="${S.i}" style="margin-top:12px;font-size:1rem">${ic('chat')}Tanya Joo</button>`}</div>`:'';
   $('padb').hidden=!sj.calc;
+  ['qfm','qps','qt','opts','fbw'].forEach(i=>mj($(i)));
   $('prev').style.visibility=S.i?'visible':'hidden';
   const last=S.i===n-1;
   $('nx').innerHTML=last?ic('flag')+'Selesai':'Lanjut'+ic('next');
@@ -161,10 +163,10 @@ $('nx').onclick=()=>{
   const miss=S.qs.length-S.ans.filter(x=>x!=null).length;
   if(!miss||confirm(`Masih ada ${miss} soal belum dijawab. Selesaikan sekarang?`))finish(false);
 };
-$('ex').onclick=()=>{if(confirm('Keluar dari sesi? Progres tidak disimpan.')){stopTimer();dash()}};
+$('ex').onclick=()=>{if(confirm('Keluar dari sesi? Progres tidak disimpan.')){stopTimer();S.active=false;dash()}};
 
 function finish(timeUp){
-  stopTimer();const n=S.qs.length,sj=SUBJECTS[S.subj];
+  stopTimer();S.active=false;const n=S.qs.length,sj=SUBJECTS[S.subj];
   const ok=S.qs.filter((q,k)=>S.ans[k]===q.answer).length,answered=S.ans.filter(x=>x!=null).length;
   const pct=Math.round(ok/n*100),prac=S.mode==='practice';
   const xp=ok*(prac?8:12)+(ok===n?50:0),oldL=lvOf(P.xp);
@@ -177,8 +179,8 @@ function finish(timeUp){
   $('rc').style.strokeDashoffset=326.7;setTimeout(()=>$('rc').style.strokeDashoffset=326.7*(1-pct/100),80);
   $('rev').innerHTML='<h3 style="text-align:left;margin:6px 0">Rekap jawaban</h3>'+S.qs.map((q,k)=>{
     const a=S.ans[k],g=a===q.answer;
-    return `<details><summary><span class="${g?'g':'b'}">${ic(g?'check':'x')}</span><span>${k+1}. ${esc(q.question)}</span></summary>${q.formula?`<p><b>Rumus:</b> ${esc(q.formula)}</p>`:''}<p><b>Jawabanmu:</b> ${a==null?'(kosong)':esc(q.options[a])}</p><p><b>Jawaban benar:</b> ${esc(q.options[q.answer])}</p>${prac?`<p>${esc(q.explanation)}</p>`:''}</details>`}).join('');
-  show('s-res');SFX.win();
+    return `<details><summary><span class="${g?'g':'b'}">${ic(g?'check':'x')}</span><span>${k+1}. ${esc(q.question)}</span></summary>${prac&&q.formula?`<p><b>Rumus:</b> ${esc(q.formula)}</p>`:''}<p><b>Jawabanmu:</b> ${a==null?'(kosong)':esc(q.options[a])}</p><p><b>Jawaban benar:</b> ${esc(q.options[q.answer])}</p>${prac?`<p>${esc(q.explanation)}</p>`:''}${g?'':`<button class="btn blu askb" data-ask="${k}" style="margin-top:10px;font-size:1rem">${ic('chat')}Tanya Joo</button>`}</details>`}).join('');
+  show('s-res');mj($('rev'));SFX.win();
 }
 $('again').onclick=()=>{M=S.mode;start()};
 
@@ -224,7 +226,7 @@ const chat=[];let busy=false;
 const SUG=['Buatkan catatan materi Hukum Newton lengkap','Jelaskan Passive Voice dengan contoh dan tabel','Kasih trik menghafal rumus Matematika SMP','Buat catatan kecil Inverted Conditional','Jelaskan perbedaan Gerund dan Participial Phrase'];
 function openChat(){
   show('s-chat');
-  if(!$('msgs').children.length)addMsg('a',md('Halo **'+esc(P.nick)+'**, aku **Joo AI**. Aku bisa membantu:\n\n- Membuat **catatan materi** dan catatan kecil\n- Menjelaskan konsep, rumus, dan contoh soal\n- Memberi **poin-poin cara menghafal**\n\nMau belajar apa hari ini?'),true);
+  if(!$('msgs').children.length)addMsg('a',md('Halo **'+esc(P.nick)+'**, aku **Joo AI**. Aku bisa membantu kamu dalam menjelaskan materi, memberikan materi, dan tips belajar lainnya, Mau belajar apa hari ini?'),true);
   $('sug').innerHTML=chat.length?'':SUG.map(s=>`<button type="button">${esc(s)}</button>`).join('');
 }
 $('sug').onclick=e=>{const b=e.target.closest('button');if(b)sendChat(b.textContent)};
@@ -239,9 +241,16 @@ async function sendChat(text){
     if(!r.ok){const d=await r.json().catch(()=>({}));throw new Error(d.error||'Joo sedang bermasalah.')}
     const rd=r.body.getReader(),dec=new TextDecoder();let t='';
     while(true){const{done,value}=await rd.read();if(done)break;t+=dec.decode(value,{stream:true});b.innerHTML=md(t);$('msgs').scrollTop=1e9}
-    chat.push({role:'assistant',content:t});SFX.ok();
+    chat.push({role:'assistant',content:t});mj(b);SFX.ok();
   }catch(e){b.textContent=e.message;chat.pop()}
   busy=false;
+}
+
+$('cb').onclick=()=>{if(S&&S.active){show('s-exam');runTimer()}else dash()};
+document.addEventListener('click',e=>{const b=e.target.closest('[data-ask]');if(b&&S)askJoo(S.qs[+b.dataset.ask],S.ans[+b.dataset.ask])});
+function askJoo(q,a){
+  stopTimer();openChat();const L='ABCD';
+  sendChat(`Tolong bantu aku memahami soal ini.\n\n${q.passage?'Teks:\n'+q.passage+'\n\n':''}Soal: ${q.question}\n${q.options.map((o,i)=>L[i]+'. '+o).join('\n')}\n\nJawabanku: ${a==null?'(belum menjawab)':L[a]+'. '+q.options[a]}\nJawaban benar: ${L[q.answer]}. ${q.options[q.answer]}\n\nJelaskan langkah demi langkah cara mengerjakannya, kenapa jawabanku keliru, rumus atau konsep kuncinya, dan satu tips agar tidak salah lagi.`);
 }
 
 P.nick?dash():welcome();
