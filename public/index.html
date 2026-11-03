@@ -3,218 +3,138 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OlimpiadeQuiz – Latihan Soal B. Inggris</title>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#2d1b69;--bg2:#46178f;--yellow:#ffc933;--red:#e21b3c;--blue:#1368ce;--gold:#d89e00;--green:#26890c;--ink:#1d1240;--ok:#26890c;--bad:#e21b3c}
-*{box-sizing:border-box;margin:0}
-body{font-family:'Nunito',system-ui,sans-serif;color:#fff;min-height:100vh;background:radial-gradient(circle at 20% 10%,var(--bg2),var(--bg) 60%);background-attachment:fixed;padding:16px;font-weight:700}
-h1,h2,h3,.btn{font-family:'Baloo 2',sans-serif}
-.wrap{max-width:720px;margin:0 auto}
-.screen{display:none}.screen.on{display:block}
-.card{background:#fff;color:var(--ink);border-radius:20px;padding:22px;box-shadow:0 6px 0 rgba(0,0,0,.25)}
-.logo{text-align:center;margin:18px 0}
-.logo h1{font-size:clamp(2.2rem,9vw,3.6rem);font-weight:800;line-height:1;text-shadow:0 4px 0 rgba(0,0,0,.3)}
-.logo h1 b{color:var(--yellow)}
-.logo p{opacity:.85;margin-top:6px}
-label{display:block;font-weight:800;margin:14px 0 6px}
-input,select{width:100%;font:inherit;font-weight:800;padding:12px 14px;border:3px solid #d9d3ee;border-radius:12px;color:var(--ink);background:#fff}
-input:focus,select:focus,.btn:focus-visible,.opt:focus-visible{outline:4px solid var(--yellow);outline-offset:2px}
-.seg{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px}
-.seg button{font:inherit;font-weight:800;padding:11px 6px;border:3px solid #d9d3ee;background:#fff;color:var(--ink);border-radius:12px;cursor:pointer}
-.seg button.sel{background:var(--bg2);border-color:var(--bg2);color:#fff;transform:translateY(-2px);box-shadow:0 4px 0 #2a0d57}
-.btn{border:0;cursor:pointer;font-size:1.3rem;font-weight:800;padding:12px 22px;border-radius:14px;color:#fff;background:var(--green);box-shadow:0 5px 0 #145a02;width:100%;margin-top:18px}
-.btn:active{transform:translateY(4px);box-shadow:0 1px 0 #145a02}
-.btn.alt{background:var(--blue);box-shadow:0 5px 0 #0b3f82}
-.err{background:#ffe3e8;color:#9b0f2a;padding:10px 12px;border-radius:10px;margin-top:12px;display:none}
-.top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}
-.pill{background:rgba(0,0,0,.28);padding:6px 14px;border-radius:99px;font-weight:800}
-.bar{height:12px;border-radius:9px;background:rgba(0,0,0,.3);overflow:hidden;margin-bottom:14px}
-.bar i{display:block;height:100%;width:0;background:var(--yellow);transition:width .4s}
-.q{background:#fff;color:var(--ink);border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:0 5px 0 rgba(0,0,0,.25)}
-.q .tag{font-size:.8rem;color:#6b5fa0}
-.q h2{font-size:1.25rem;line-height:1.35;font-weight:600;margin-top:4px}
-.passage{background:#f3f0fb;border-left:6px solid var(--bg2);padding:10px 12px;border-radius:8px;margin:10px 0;font-weight:500;line-height:1.5;white-space:pre-line}
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media(max-width:560px){.opts{grid-template-columns:1fr}}
-.opt{font:inherit;font-weight:800;text-align:left;color:#fff;border:0;border-radius:14px;padding:16px 14px;cursor:pointer;display:flex;gap:10px;align-items:center;min-height:68px;box-shadow:0 5px 0 rgba(0,0,0,.3);transition:transform .1s,opacity .2s}
-.opt:active:not(:disabled){transform:translateY(4px);box-shadow:0 1px 0 rgba(0,0,0,.3)}
-.opt .sh{font-size:1.5rem;flex:none;width:30px;text-align:center}
-.o0{background:var(--red)}.o1{background:var(--blue)}.o2{background:var(--gold)}.o3{background:var(--green)}
-.opt:disabled{cursor:default}
-.opt.dim{opacity:.35}
-.opt.right{outline:5px solid #fff;animation:pop .35s}
-.opt.wrong{animation:shake .35s}
-@keyframes pop{50%{transform:scale(1.04)}}
-@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-.fb{display:none;border-radius:18px;padding:16px;margin-top:14px;background:#fff;color:var(--ink);box-shadow:0 5px 0 rgba(0,0,0,.25)}
-.fb h3{font-size:1.5rem}
-.fb.ok h3{color:var(--ok)}.fb.no h3{color:var(--bad)}
-.fb p{font-weight:600;line-height:1.5;margin-top:4px}
-.res{text-align:center}
-.res .big{font-family:'Baloo 2';font-size:4rem;font-weight:800;color:var(--bg2);line-height:1}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
-.stats div{background:#f3f0fb;border-radius:12px;padding:10px}
-.stats b{display:block;font-size:1.4rem;font-family:'Baloo 2'}
-.rev{text-align:left;margin-top:10px}
-.rev details{background:#f3f0fb;border-radius:12px;padding:10px 12px;margin-top:8px}
-.rev summary{cursor:pointer;font-weight:800}
-.rev p{font-weight:500;margin-top:6px;line-height:1.45}
-.semangat{position:fixed;right:14px;bottom:14px;z-index:20;width:auto;margin:0;padding:10px 18px;font-size:1.1rem;background:var(--yellow);color:var(--ink);box-shadow:0 5px 0 #a57c00}
-#boost{position:fixed;inset:0;pointer-events:none;z-index:30;overflow:hidden}
-#boost img{position:absolute;width:clamp(90px,24vw,200px);aspect-ratio:1;object-fit:cover;border:5px solid #fff;border-radius:18px;box-shadow:0 8px 20px rgba(0,0,0,.45);animation:in .5s cubic-bezier(.2,1.6,.4,1) both}
-#boost .msg{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--yellow);color:var(--ink);font-family:'Baloo 2';font-weight:800;font-size:clamp(1.5rem,6vw,2.6rem);text-align:center;padding:14px 22px;border-radius:20px;width:min(88vw,520px);box-shadow:0 8px 0 rgba(0,0,0,.35);animation:in .5s cubic-bezier(.2,1.6,.4,1) both}
-#boost.out{opacity:0;transition:opacity .5s}
-@keyframes in{from{transform:translate(var(--tx,0),var(--ty,0)) scale(0) rotate(0)}}
-#boost .msg{--tx:-50%;--ty:-50%}
-.loader{text-align:center;padding:60px 10px}
-.spin{width:64px;height:64px;border:8px solid rgba(255,255,255,.25);border-top-color:var(--yellow);border-radius:50%;margin:0 auto 16px;animation:sp 1s linear infinite}
-@keyframes sp{to{transform:rotate(360deg)}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-</style>
+<title>JAQuiz – Latihan Soal Olimpiade</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 01-10 0V4zM17 5h3v2a3 3 0 01-3 3M7 5H4v2a3 3 0 003 3"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2V5zM4 19a2 2 0 012-2h13"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 01-11.6 7.1L4 20l1-4.6A8 8 0 1121 12z"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+<symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16l-1 4zM14 6l3 3"/></symbol>
+<symbol id="i-eraser" viewBox="0 0 24 24"><path d="M3 16l9-9a2 2 0 013 0l4 4a2 2 0 010 3l-5 5H8l-5-3zM10 21h11"/></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol>
+<symbol id="i-spk" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4zM16 9a4 4 0 010 6M18.5 6.5a8 8 0 010 11"/></symbol>
+<symbol id="i-mute" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4zM17 9l5 6M22 9l-5 6"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+<symbol id="i-next" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24"><path d="M3 11l18-8-8 18-2-8-8-2z"/></symbol>
+<symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h12l-2 4 2 4H5"/></symbol>
+<symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3L5 14h6l-1 7 8-11h-6l1-7z"/></symbol>
+<symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
+<symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L4 19a2 2 0 002 3h12a2 2 0 002-3l-6-10V3"/></symbol>
+<symbol id="i-calc" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h2M12 12h2M8 16h2M12 16h2"/></symbol>
+<symbol id="i-sig" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+<symbol id="s0" viewBox="0 0 24 24"><path d="M12 4l9 16H3z"/></symbol>
+<symbol id="s1" viewBox="0 0 24 24"><path d="M12 3l9 9-9 9-9-9z"/></symbol>
+<symbol id="s2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></symbol>
+<symbol id="s3" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/></symbol>
+</defs></svg>
+
 <div class="wrap">
+<section id="s-welcome" class="screen on"><div>
+  <div class="tw" id="tw"></div>
+  <form id="nickbox" autocomplete="off">
+    <label class="l" for="nick" style="text-align:center">Siapa nama panggilanmu?</label>
+    <input id="nick" maxlength="16" placeholder="Masukkan nickname">
+    <div class="err" id="nerr"></div>
+    <button class="btn yel full" type="submit">Mulai</button>
+  </form>
+</div></section>
 
-<section id="s-start" class="screen on">
-  <div class="logo"><h1>Olimpiade<b>Quiz</b></h1><p>Latihan soal B. Inggris, soalnya dibuat AI jadi nggak pernah habis</p></div>
-  <div class="card">
-    <label for="nick">Nickname</label>
-    <input id="nick" maxlength="16" placeholder="Contoh: Jose" autocomplete="off">
-    <label for="topic">Materi</label>
-    <select id="topic"></select>
-    <label>Level kesulitan</label>
-    <div class="seg" id="lv"></div>
-    <label>Jumlah soal</label>
-    <div class="seg" id="ct"></div>
-    <div class="err" id="err1"></div>
-    <button class="btn" id="go">Mulai ujian!</button>
+<section id="s-dash" class="screen">
+  <div class="hud">
+    <button class="av" id="av" title="Ganti nickname" aria-label="Ganti nickname"></button>
+    <div class="who"><h2 id="dn"></h2>
+      <div class="xp"><i id="xpb"></i></div>
+      <div class="xpl"><span id="lvl"></span><span id="xpt"></span></div></div>
+    <button class="icb" id="snd" aria-label="Suara"></button>
+  </div>
+  <div class="chips">
+    <div class="chip"><b id="c1">0</b><span>Soal dikerjakan</span></div>
+    <div class="chip"><b id="c2">0%</b><span>Akurasi</span></div>
+    <div class="chip"><b id="c3">0</b><span>Sesi selesai</span></div>
+  </div>
+  <div class="sec"><svg class="ic"><use href="#i-flag"/></svg>Pilih Misi</div>
+  <div class="missions">
+    <button class="mc q" data-go="quiz"><span class="bi"><svg class="ic"><use href="#i-trophy"/></svg></span><span><h3>Quiz</h3><p>Mode ujian: ada waktu, tanpa pembahasan sampai selesai.</p></span></button>
+    <button class="mc p" data-go="practice"><span class="bi"><svg class="ic"><use href="#i-target"/></svg></span><span><h3>Latihan Soal</h3><p>Langsung ada penjelasan dari AI di setiap soal.</p></span></button>
+    <button class="mc j" data-go="chat"><span class="bi"><svg class="ic"><use href="#i-chat"/></svg></span><span><h3>Tanya Belajar</h3><p>Ngobrol dengan Joo AI: catatan materi, rumus, trik hafalan.</p></span></button>
+  </div>
+  <div class="sec"><svg class="ic"><use href="#i-sig"/></svg>Riwayat Terakhir</div>
+  <div class="hist" id="hist"></div>
+</section>
+
+<section id="s-setup" class="screen">
+  <div class="top"><button class="icb" data-go="dash" aria-label="Kembali"><svg class="ic"><use href="#i-back"/></svg></button><h2 id="sh"></h2></div>
+  <div class="panel">
+    <label class="l">Mata pelajaran</label><div class="seg sj" id="sg-sj"></div>
+    <label class="l" for="sel">Materi / paket</label><select id="sel"></select><div class="hint" id="selh"></div>
+    <label class="l">Tingkat kesulitan</label><div class="seg" id="sg-lv"></div>
+    <label class="l">Jumlah soal</label><div class="seg" id="sg-ct"></div>
+    <label class="l">Waktu</label><div class="seg" id="sg-tm"></div>
+    <div class="err" id="serr"></div>
+    <button class="btn full" id="go"><svg class="ic"><use href="#i-bolt"/></svg>Buat soal & mulai</button>
   </div>
 </section>
 
-<section id="s-load" class="screen"><div class="loader"><div class="spin"></div><h2 id="ltxt">AI lagi bikin soal…</h2></div></section>
+<section id="s-load" class="screen"><div class="loader"><div class="spin"></div><h2 id="lt">AI lagi menyiapkan soal…</h2></div></section>
 
-<section id="s-quiz" class="screen">
-  <div class="top"><span class="pill" id="prog"></span><span class="pill" id="score"></span></div>
-  <div class="bar"><i id="bar"></i></div>
-  <div class="q"><span class="tag" id="qtag"></span><div class="passage" id="qpass" hidden></div><h2 id="qtext"></h2></div>
+<section id="s-exam" class="screen">
+  <div class="eh">
+    <button class="icb" id="ex" aria-label="Keluar"><svg class="ic"><use href="#i-x"/></svg></button>
+    <div class="mid" id="pg"></div>
+    <div class="tm" id="tm"></div>
+  </div>
+  <div class="pb"><i id="pbi"></i></div>
+  <div class="nav" id="nav"></div>
+  <div class="qc"><div class="tag" id="qtag"></div><div class="fm" id="qfm" hidden></div><div class="pass" id="qps" hidden></div><h2 id="qt"></h2></div>
   <div class="opts" id="opts"></div>
-  <div class="fb" id="fb"><h3 id="fbh"></h3><p id="fbp"></p><button class="btn alt" id="next">Lanjut</button></div>
+  <div id="fbw"></div>
+  <div class="bar">
+    <button class="btn gho" id="prev"><svg class="ic"><use href="#i-back"/></svg>Sebelumnya</button>
+    <button class="btn blu" id="padb" hidden><svg class="ic"><use href="#i-pen"/></svg>Kertas coret</button>
+    <button class="btn" id="nx">Lanjut<svg class="ic"><use href="#i-next"/></svg></button>
+  </div>
 </section>
 
-<section id="s-end" class="screen">
-  <div class="card res">
-    <h2 id="rt"></h2>
-    <div class="big" id="rs"></div>
-    <div class="stats"><div><b id="rc"></b>benar</div><div><b id="rw"></b>salah</div><div><b id="rk"></b>streak terbaik</div></div>
-    <p id="rm"></p>
-    <div class="rev" id="rev"></div>
-    <button class="btn" id="again">Main lagi</button>
-  </div>
+<section id="s-res" class="screen"><div class="panel res">
+  <h2 id="rt"></h2>
+  <div class="ring"><svg viewBox="0 0 120 120" width="170" height="170"><circle cx="60" cy="60" r="52" stroke="#0c0820"/><circle id="rc" cx="60" cy="60" r="52" stroke="#ffc933" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7" style="transition:stroke-dashoffset 1.2s"/></svg><div class="big" id="rs"></div></div>
+  <p id="rm"></p>
+  <div class="stats"><div class="chip"><b id="r1"></b><span>Benar</span></div><div class="chip"><b id="r2"></b><span>Salah / kosong</span></div><div class="chip"><b id="r3"></b><span>XP didapat</span></div></div>
+  <div class="rev" id="rev"></div>
+  <div class="bar"><button class="btn gho" data-go="dash">Dashboard</button><button class="btn yel" id="again">Ulangi</button></div>
+</div></section>
+
+<section id="s-chat" class="screen">
+  <div class="top"><button class="icb" data-go="dash" aria-label="Kembali"><svg class="ic"><use href="#i-back"/></svg></button><h2>Joo AI</h2></div>
+  <div id="msgs"></div>
+  <div class="sug" id="sug"></div>
+  <form class="cf" id="cf"><input id="ci" placeholder="Tanya Joo AI…" maxlength="1500" autocomplete="off"><button class="btn yel" type="submit" aria-label="Kirim"><svg class="ic"><use href="#i-send"/></svg></button></form>
 </section>
 </div>
 
-<button class="btn semangat" id="spirit">Semangat!</button>
-<div id="boost"></div>
+<div id="pad">
+  <div class="pt">
+    <span class="sp">Kertas Coret</span>
+    <button id="t-pen" class="sel" aria-label="Pena"><svg class="ic"><use href="#i-pen"/></svg></button>
+    <button id="t-er" aria-label="Penghapus"><svg class="ic"><use href="#i-eraser"/></svg></button>
+    <button class="cl" style="background:#1d1240" data-c="#1d1240" aria-label="Hitam"></button>
+    <button class="cl" style="background:#d6293e" data-c="#d6293e" aria-label="Merah"></button>
+    <button class="cl" style="background:#1568d4" data-c="#1568d4" aria-label="Biru"></button>
+    <button id="t-cl" aria-label="Bersihkan semua"><svg class="ic"><use href="#i-trash"/></svg></button>
+    <button id="t-x" class="sel" aria-label="Tutup"><svg class="ic"><use href="#i-x"/></svg></button>
+  </div>
+  <div id="pw"><canvas id="cv"></canvas></div>
+</div>
 
-<script>
-const GROUPS={
- "Grammar & Structure":["16 English Tenses","Subject-Verb Agreement","Parts of Speech","Pronouns","To Be: Am, Is, Are, Was, Were","Articles: A, An, The","Singular and Plural Nouns","Countable and Uncountable Nouns","Quantifiers: Some, Any, Much, Many, Few, Little","Adjectives and Adverbs","Degrees of Comparison","Prepositions of Time and Place","Conjunctions","Modal Verbs","Active and Passive Voice","Direct and Indirect Speech","Conditional Sentences","Relative Clauses","Gerunds and Infinitives","Question Tags","WH-Questions","Subject and Object","Sentence Structure","Positive, Negative, and Interrogative Sentences","Imperative Sentences","Error Recognition","Word Order and Sentence Arrangement","Causative and Cause-and-Effect Expressions"],
- "Vocabulary":["Synonyms","Antonyms","Word Meaning in Context","Idioms","Phrasal Verbs","Proverbs","Prefixes and Suffixes","Word Formation","Commonly Confused Words","Collocations","Spelling and Word Usage","Riddles and Odd One Out"],
- "Reading Comprehension":["Main Idea","Topic and Title","Specific Information","Explicit and Implicit Information","Inference and Deduction","Reference Words","Author's Purpose","Drawing Conclusions","Cause and Effect","Vocabulary in Context","Skimming and Scanning","Critical Reading","Comparing Two Texts"],
- "Text Types":["Descriptive Text","Recount Text","Narrative Text","Procedure Text","Report Text","Analytical Exposition","Spoof Text","Explanation Text","Announcement","Advertisement","Invitation","Greeting Cards","Short Messages and Notices","Labels","Letters and Emails","Posters","Dialogues and Conversations"],
- "Expressions & Communication":["Greetings and Leave-Taking","Introduction and Self-Introduction","Asking and Giving Opinions","Agreement and Disagreement","Asking for and Giving Suggestions","Asking for and Giving Advice","Asking for and Giving Permission","Asking for and Giving Help","Offering Help","Invitations and Responses","Compliments and Congratulations","Expressing Gratitude and Apologies","Expressing Feelings","Expressing Ability and Inability","Expressing Obligation and Necessity","Expressing Intention and Plans","Polite Expressions","Dialogue Completion"],
- "Tambahan":["Basic Translation","Cloze Tests","Sentence Completion","Paragraph Completion","Sentence Transformation","Synonym and Antonym in Context","Logical Reasoning in English","Short Functional Text Analysis","Common English Idiomatic Expressions","Basic Literary Devices","Reading Charts, Tables, and Schedules"]
-};
-const LEVELS=[["mudah","Mudah"],["sedang","Sedang"],["sulit","Sulit"],["olimpiade","Olimpiade"]];
-const COUNTS=[5,10,15,20];
-const SHAPES=["▲","◆","●","■"];
-const PHOTO="https://files.catbox.moe/trfkkb.jpg";
-const MSGS=["Semangat beb, pasti bisa","Satu soal lagi, gaskenn","Belajar hari ini, besok ke US","Gas terus beb","Sikit aaa"];
-const $=id=>document.getElementById(id);
-const S={level:"sedang",count:10,qs:[],i:0,score:0,ok:0,streak:0,best:0,log:[],nick:""};
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-function show(id){document.querySelectorAll(".screen").forEach(e=>e.classList.remove("on"));$(id).classList.add("on");scrollTo(0,0)}
-
-// Start screen setup
-(function(){
-  const t=$("topic");
-  t.innerHTML='<option value="__all">Acak semua materi</option>'+Object.entries(GROUPS).map(([g,l])=>`<optgroup label="${g}"><option value="__g:${g}">Semua ${g}</option>${l.map(x=>`<option>${esc(x)}</option>`).join("")}</optgroup>`).join("");
-  const seg=(el,items,key,fmt)=>{el.innerHTML="";items.forEach(it=>{const v=Array.isArray(it)?it[0]:it,b=document.createElement("button");b.textContent=Array.isArray(it)?it[1]:fmt(it);b.type="button";b.onclick=()=>{S[key]=v;[...el.children].forEach(c=>c.classList.remove("sel"));b.classList.add("sel")};if(v===S[key])b.classList.add("sel");el.appendChild(b)})};
-  seg($("lv"),LEVELS,"level");seg($("ct"),COUNTS,"count",n=>n+" soal");
-  try{$("nick").value=localStorage.getItem("nick")||""}catch(e){}
-})();
-
-function pickTopics(v){
-  const all=Object.values(GROUPS).flat();
-  let pool=v==="__all"?all:v.startsWith("__g:")?GROUPS[v.slice(4)]:[v];
-  return [...pool].sort(()=>Math.random()-.5).slice(0,Math.min(pool.length,S.count));
-}
-
-function err(m){const e=$("err1");e.textContent=m;e.style.display=m?"block":"none"}
-
-$("go").onclick=async()=>{
-  const nick=$("nick").value.trim();
-  if(!nick){err("Isi nickname dulu ya.");$("nick").focus();return}
-  err("");S.nick=nick;try{localStorage.setItem("nick",nick)}catch(e){}
-  $("ltxt").textContent="AI lagi bikin soal, "+nick+"…";show("s-load");
-  try{
-    const r=await fetch("/api/quiz",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({level:S.level,count:S.count,topics:pickTopics($("topic").value)})});
-    const d=await r.json();
-    if(!r.ok||!d.questions)throw new Error(d.error||"Gagal memuat soal");
-    Object.assign(S,{qs:d.questions,i:0,score:0,ok:0,streak:0,best:0,log:[]});
-    render();show("s-quiz");
-  }catch(e){show("s-start");err(e.message)}
-};
-
-function render(){
-  const q=S.qs[S.i];
-  $("prog").textContent=`Soal ${S.i+1}/${S.qs.length}`;
-  $("score").textContent=`${S.score} poin`;
-  $("bar").style.width=(S.i/S.qs.length*100)+"%";
-  $("qtag").textContent=q.topic;
-  const p=$("qpass");p.hidden=!q.passage;p.textContent=q.passage||"";
-  $("qtext").textContent=q.question;
-  $("fb").style.display="none";
-  const o=$("opts");o.innerHTML="";
-  q.options.forEach((t,k)=>{const b=document.createElement("button");b.className="opt o"+k;b.innerHTML=`<span class="sh">${SHAPES[k]}</span><span>${esc(t)}</span>`;b.onclick=()=>answer(k);o.appendChild(b)});
-}
-
-function answer(k){
-  const q=S.qs[S.i],good=k===q.answer,bs=[...$("opts").children];
-  bs.forEach((b,j)=>{b.disabled=true;if(j===q.answer)b.classList.add("right");else if(j===k)b.classList.add("wrong");else b.classList.add("dim")});
-  if(good){S.ok++;S.streak++;S.best=Math.max(S.best,S.streak);S.score+=100+Math.min(S.streak-1,5)*20}else S.streak=0;
-  S.log.push({q,k,good});
-  $("score").textContent=`${S.score} poin`;
-  const fb=$("fb");fb.className="fb "+(good?"ok":"no");fb.style.display="block";
-  $("fbh").textContent=good?(S.streak>1?`Benar! Streak ${S.streak} 🔥`:"Benar! 🎉"):"Belum tepat 😅";
-  $("fbp").textContent=(good?"":"Jawaban benar: "+q.options[q.answer]+". ")+q.explanation;
-  $("next").textContent=S.i+1<S.qs.length?"Lanjut":"Lihat hasil";
-  fb.scrollIntoView({behavior:"smooth",block:"nearest"});
-}
-
-$("next").onclick=()=>{S.i++;S.i<S.qs.length?render():finish()};
-
-function finish(){
-  const n=S.qs.length,pct=Math.round(S.ok/n*100);
-  $("rt").textContent=`Selesai, ${S.nick}!`;
-  $("rs").textContent=S.score;
-  $("rc").textContent=S.ok;$("rw").textContent=n-S.ok;$("rk").textContent=S.best;
-  $("rm").textContent=pct>=80?"Mantap, level juara! 🏆":pct>=50?"Lumayan, tinggal diasah lagi 💪":"Tenang, salah itu bagian dari belajar. Baca pembahasannya ya 📖";
-  $("rev").innerHTML="<h3>Pembahasan</h3>"+S.log.map((l,j)=>`<details><summary>${l.good?"✅":"❌"} ${j+1}. ${esc(l.q.question)}</summary><p><b>Jawaban:</b> ${esc(l.q.options[l.q.answer])}</p><p>${esc(l.q.explanation)}</p></details>`).join("");
-  show("s-end");
-}
-$("again").onclick=()=>show("s-start");
-
-// Tombol Semangat!
-let boostTimer;
-$("spirit").onclick=()=>{
-  const b=$("boost");clearTimeout(boostTimer);b.className="";b.innerHTML="";
-  const spots=[[2,3],[40,2],[72,3],[2,38],[74,38],[2,70],[38,74],[72,70]];
-  spots.forEach(([x,y],j)=>{const im=new Image();im.src=PHOTO;im.alt="";im.style.left=x+"%";im.style.top=y+"%";im.style.transform=`rotate(${(Math.random()*24-12).toFixed(1)}deg)`;im.style.animationDelay=(j*60)+"ms";b.appendChild(im)});
-  const m=document.createElement("div");m.className="msg";m.textContent=MSGS[Math.floor(Math.random()*MSGS.length)];b.appendChild(m);
-  boostTimer=setTimeout(()=>{b.classList.add("out");setTimeout(()=>{b.innerHTML="";b.className=""},500)},3500);
-};
-</script>
+<script src="data.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
